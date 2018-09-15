@@ -69,7 +69,7 @@ module.exports = {
   getModelPath (modelName) {
     return path.resolve(
       this.getModelsPath(),
-      this.addFileExtension(modelName.toLowerCase())
+      this.addFileExtension(modelName)
     );
   },
 
