@@ -8,13 +8,26 @@ module.exports = {
     return Sequelize.Utils.pluralize(modelName);
   },
 
-  generateTableCreationFileContent(args) {
-    return helpers.template.render('migrations/create-table.js', {
-      tableName: this.getTableName(args.name),
-      attributes: helpers.model.transformAttributes(args.attributes),
-      createdAt: args.underscored ? 'created_at' : 'createdAt',
-      updatedAt: args.underscored ? 'updated_at' : 'updatedAt',
-    });
+  generateTableCreationFileContent (args) {
+    let tableName = this.getTableName(args.name);
+    let attributes = helpers.model.transformAttributes(args.attributes);
+    let createdAt = 'createdAt';
+    let updatedAt = 'updatedAt';
+
+    if (args.paranoid) {
+      attributes.push({ fieldName: 'deletedAt', dataType: 'date' };);
+    }
+
+    if (args.underscored) {
+      createdAt = 'created_at';
+      updatedAt = 'updated_at';
+      tableName = Sequelize.Utils.underscore(tableName);
+      attributes = attributes.map(attribute => {
+        const fieldName = Sequelize.Utils.underscore(attribute.fieldName);
+        return { ...attribute, fieldName }
+      });
+    }
+    return helpers.template.render('migrations/create-table.js', { tableName, attributes, createdAt, updatedAt });
   },
 
   generateMigrationName(args) {

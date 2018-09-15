@@ -64,7 +64,7 @@ export function _baseOptions(yargs) {
 export function _underscoreOption(yargs) {
   return yargs.option('underscored', {
     describe: "Use snake case for the timestamp's attribute names",
-    default: false,
+    default: true,
     type: 'boolean',
   });
 }

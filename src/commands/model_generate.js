@@ -16,6 +16,11 @@ exports.builder = (yargs) =>
         type: 'string',
         demandOption: true,
       })
+      .option('paranoid', {
+        describe: "Make models paranoid",
+        default: true,
+        type: 'boolean'
+      })
       .option('force', {
         describe: 'Forcefully re-creates model with the same name',
         type: 'string',
