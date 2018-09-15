@@ -15,7 +15,7 @@ module.exports = {
     let updatedAt = 'updatedAt';
 
     if (args.paranoid) {
-      attributes.push({ fieldName: 'deletedAt', dataType: 'date' };);
+      attributes.push({ fieldName: 'deletedAt', dataType: 'date' });
     }
 
     if (args.underscored) {
